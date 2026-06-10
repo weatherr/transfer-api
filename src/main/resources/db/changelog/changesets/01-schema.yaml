@@ -1,0 +1,146 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: constantine
+      changes:
+        - createTable:
+            tableName: accounts
+            columns:
+              - column:
+                  name: iban
+                  type: varchar(34)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: owner
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: bigint
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: ledger_entries
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: correlation_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_iban
+                  type: varchar(34)
+                  constraints:
+                    nullable: false
+                    references: accounts(iban)
+                    foreignKeyName: fk_ledger_account
+              - column:
+                  name: transaction_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: standing_orders
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: source_iban
+                  type: varchar(34)
+                  constraints:
+                    nullable: false
+                    references: accounts(iban)
+                    foreignKeyName: fk_so_source_account
+              - column:
+                  name: destination_iban
+                  type: varchar(34)
+                  constraints:
+                    nullable: false
+                    references: accounts(iban)
+                    foreignKeyName: fk_so_dest_account
+              - column:
+                  name: amount
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cron_schedule
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: shedlock
+            columns:
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lock_until
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: locked_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: locked_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

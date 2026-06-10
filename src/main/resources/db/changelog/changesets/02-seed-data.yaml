@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: constantine
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column: { name: iban, value: "BG01FINV001" }
+              - column: { name: owner, value: "Ivan Petrov" }
+              - column: { name: currency, value: "USD" }
+              - column: { name: balance, valueNumeric: 10000.00 }
+              - column: { name: version, valueNumeric: 0 }
+        - insert:
+            tableName: accounts
+            columns:
+              - column: { name: iban, value: "BG01FINV002" }
+              - column: { name: owner, value: "Maria Koleva" }
+              - column: { name: currency, value: "EUR" }
+              - column: { name: balance, valueNumeric: 5000.00 }
+              - column: { name: version, valueNumeric: 0 }
+        - insert:
+            tableName: accounts
+            columns:
+              - column: { name: iban, value: "BG01FINV003" }
+              - column: { name: owner, value: "Georgi Ivanov" }
+              - column: { name: currency, value: "USD" }
+              - column: { name: balance, valueNumeric: 2500.00 }
+              - column: { name: version, valueNumeric: 0 }
+        - insert:
+            tableName: accounts
+            columns:
+              - column: { name: iban, value: "BG01FINV004" }
+              - column: { name: owner, value: "Elena Todorova" }
+              - column: { name: currency, value: "EUR" }
+              - column: { name: balance, valueNumeric: 8000.00 }
+              - column: { name: version, valueNumeric: 0 }
