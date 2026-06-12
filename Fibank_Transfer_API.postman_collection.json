@@ -1,0 +1,59 @@
+{
+    "info": {
+        "name": "Fibank Transfer API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Get All Accounts",
+            "request": {
+                "method": "GET",
+                "header": [
+                    { "key": "X-FIB-AUTH", "value": "default-dev-key" }
+                ],
+                "url": { "raw": "http://localhost:8080/api/v1/accounts", "protocol": "http", "host": [ "localhost" ], "port": "8080", "path": [ "api", "v1", "accounts" ] }
+            }
+        },
+        {
+            "name": "2. Execute One-Time Transfer",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "X-FIB-AUTH", "value": "default-dev-key" },
+                    { "key": "X-Idempotency-Key", "value": "{{$guid}}" },
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"sourceIban\": \"BG01FINV001\",\r\n    \"destinationIban\": \"BG01FINV002\",\r\n    \"amount\": 150.50,\r\n    \"currency\": \"USD\"\r\n}"
+                },
+                "url": { "raw": "http://localhost:8080/api/v1/transfers", "protocol": "http", "host": [ "localhost" ], "port": "8080", "path": [ "api", "v1", "transfers" ] }
+            }
+        },
+        {
+            "name": "3. Query Paginated Ledger",
+            "request": {
+                "method": "GET",
+                "header": [
+                    { "key": "X-FIB-AUTH", "value": "default-dev-key" }
+                ],
+                "url": { "raw": "http://localhost:8080/api/v1/ledger?page=0&size=20&iban=BG01FINV001", "protocol": "http", "host": [ "localhost" ], "port": "8080", "path": [ "api", "v1", "ledger" ], "query": [ { "key": "page", "value": "0" }, { "key": "size", "value": "20" }, { "key": "iban", "value": "BG01FINV001" } ] }
+            }
+        },
+        {
+            "name": "4. Create Standing Order",
+            "request": {
+                "method": "POST",
+                "header": [
+                    { "key": "X-FIB-AUTH", "value": "default-dev-key" },
+                    { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"sourceIban\": \"BG01FINV003\",\r\n    \"destinationIban\": \"BG01FINV004\",\r\n    \"amount\": 50.00,\r\n    \"cronSchedule\": \"0 * * * * *\"\r\n}"
+                },
+                "url": { "raw": "http://localhost:8080/api/v1/standing-orders", "protocol": "http", "host": [ "localhost" ], "port": "8080", "path": [ "api", "v1", "standing-orders" ] }
+            }
+        }
+    ]
+}
